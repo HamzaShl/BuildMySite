@@ -11,22 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //schéma de la table commentaire
-        Schema::create('commentaire', function (Blueprint $table) {
-            $table->uuid('id_commentaire')->primary(); 
-            $table->string('titre_commentaire'); // ✅ AJOUTER TITRE
-            $table->text('contenu_commentaire');
-
-            //clés étrangères
-            $table->uuid('id_dev'); 
-            $table->uuid('id_entreprise'); 
+        Schema::create('devis', function (Blueprint $table) {
+            $table->uuid('id_devis')->primary();
+            $table->string('titre_devis');
+            $table->decimal('prix', 10, 2); // Prix du devis
+            
+            // Clés étrangères
+            $table->uuid('id_mission');
+            $table->uuid('id_dev');
+            $table->uuid('id_entreprise');
             
             // Définition des clés étrangères
+            $table->foreign('id_mission')->references('id_mission')->on('mission')->onDelete('cascade');
             $table->foreign('id_dev')->references('id_dev')->on('dev')->onDelete('cascade');
             $table->foreign('id_entreprise')->references('id_entreprise')->on('entreprise')->onDelete('cascade');
-            // Optionnel : contrainte d'unicité pour empêcher plusieurs commentaires par entreprise/dev
-            $table->unique(['id_dev', 'id_entreprise']);
-
+            
             $table->timestamps();
         });
     }
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('commentaire');
+        Schema::dropIfExists('devis');
     }
 };

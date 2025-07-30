@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('taille_entreprise');
             $table->string('secteur_entreprise');
             $table->string('type_freelance');
-            $table->string('nombre_freelance');
+            
 
             $table->timestamps();
         });
