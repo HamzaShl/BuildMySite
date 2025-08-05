@@ -27,5 +27,8 @@ class Dev extends Authenticatable
         'portfolio',
     ];
 
-   
+   public function commentaires()
+{
+    return $this->hasMany(Commentaire::class, 'id_dev', 'id_dev');
+}
 }

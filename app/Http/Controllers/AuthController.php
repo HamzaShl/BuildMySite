@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\Dev;
 use App\Models\Entreprise;
+use App\Mail\WelcomeEmail;                   
+use Illuminate\Support\Facades\Mail;  
 
 class AuthController extends Controller
 {
@@ -30,13 +32,14 @@ class AuthController extends Controller
         ]);
 
         if ($request->input('type') === 'dev') {
-
+            
+            //données que l'utilisateur doit entrer
             $request->validate([
                 'email' => 'required|email|unique:dev,email_dev',
                 'password' => 'required|min:6|confirmed',
                 'nom_dev' => 'required|string|max:255',
                 'prenom_dev' => 'required|string|max:255',
-                'niveau_experience' => 'required|in:junior,senior',
+                'niveau_experience' => 'required|in:junior,confirme,senior',
                 'specialite_dev' => 'required|in:front,back,fullstack',
                 'description' => 'nullable|string',
                 'photo' => 'nullable|image|max:2048',
@@ -44,11 +47,13 @@ class AuthController extends Controller
                 'portfolio' => 'nullable|mimes:pdf,zip|max:8192',
             ]);
 
-            // Upload fichiers (facultatif)
+            // Upload des fichiers
             $photo = $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null;
             $cv = $request->file('cv') ? $request->file('cv')->store('cvs', 'public') : null;
             $portfolio = $request->file('portfolio') ? $request->file('portfolio')->store('portfolios', 'public') : null;
 
+
+            //eloquent Create qui va créer le dev en base
             $dev = Dev::create([
                 'id_dev' => (string) Str::uuid(),
                 'email_dev' => $request->input('email'),
@@ -63,8 +68,13 @@ class AuthController extends Controller
                 'portfolio' => $portfolio,
             ]);
 
+            //envoie du mail de bienvenue
+            Mail::to($dev->email_dev)->send(new WelcomeEmail([
+            'name' => $dev->prenom_dev . ' ' . $dev->nom_dev,
+            'email' => $dev->email_dev
+        ]));
+            //redirection vers la vue du dev enregistré en base
             Auth::guard('dev')->login($dev);
-
             return redirect()->route('devs.index')->with('success', 'Inscription développeur réussie');
         }
 
@@ -88,6 +98,10 @@ class AuthController extends Controller
                 'secteur_entreprise' => $request->input('secteur_entreprise'),
                 'type_freelance' => $request->input('type_freelance'),
             ]);
+             Mail::to($entreprise->email_entreprise)->send(new WelcomeEmail([
+            'name' => $entreprise->nom_entreprise,
+            'email' => $entreprise->email_entreprise
+        ]));
 
             Auth::guard('entreprise')->login($entreprise);
 

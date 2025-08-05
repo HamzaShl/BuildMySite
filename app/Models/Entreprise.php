@@ -25,5 +25,8 @@ class Entreprise extends Authenticatable
 
     protected $keyType = 'string';
 
-    
+    public function commentaires()
+    {
+        return $this->hasMany(Commentaire::class, 'id_entreprise', 'id_entreprise');
+    }
 }

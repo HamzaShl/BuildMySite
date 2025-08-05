@@ -6,7 +6,7 @@
     <div class="text-center mt-10 max-w-3xl mx-auto px-4">
         <h1 class="text-6xl font-bold mb-6">Bienvenue sur BuildMySite</h1>
 
-        <p class="text-3xl leading-relaxed text-gray-700">
+        <p class="text-2xl leading-relaxed text-gray-700 m-20">
             BuildMySite est une plateforme qui facilite la mise en relation entre 
             des développeurs freelances qualifiés et des entreprises à la recherche 
             de compétences spécifiques pour leurs projets web.<br> Que vous soyez une entreprise 

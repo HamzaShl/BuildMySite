@@ -51,26 +51,41 @@
             <h2 class="text-lg font-medium mt-4 mb-2">Informations Développeur</h2>
 
             <input type="text" name="nom_dev" placeholder="Nom" class="w-full border p-2 rounded mb-2" value="{{ old('nom_dev') }}">
+            @error('nom_dev')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+
             <input type="text" name="prenom_dev" placeholder="Prénom" class="w-full border p-2 rounded mb-2" value="{{ old('prenom_dev') }}">
+            @error('prenom_dev')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+
             <select name="niveau_experience" class="w-full border p-2 rounded mb-2">
-    <option value="">-- Niveau d'expérience --</option>
-    <option value="junior" {{ old('niveau_experience') == 'junior' ? 'selected' : '' }}>Junior (entre 0 et 4 ans d'éxperience)</option>
-    <option value="confirme" {{ old('niveau_experience') == 'confirme' ? 'selected' : '' }}>Confirmé (entre 5 et 9 ans d'expérience)</option>
-    <option value="senior" {{ old('niveau_experience') == 'senior' ? 'selected' : '' }}>Senior (au dessus de 10 ans d'éxperience)</option>
-</select>
+                <option value="">-- Niveau d'expérience --</option>
+                <option value="junior" {{ old('niveau_experience') == 'junior' ? 'selected' : '' }}>Junior (entre 0 et 4 ans d'éxperience)</option>
+                <option value="confirme" {{ old('niveau_experience') == 'confirme' ? 'selected' : '' }}>Confirmé (entre 5 et 9 ans d'expérience)</option>
+                <option value="senior" {{ old('niveau_experience') == 'senior' ? 'selected' : '' }}>Senior (au dessus de 10 ans d'éxperience)</option>
+            </select>
+            @error('niveau_experience')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+
             <select name="specialite_dev" class="w-full border p-2 rounded mb-2">
                 <option value="">-- Spécialité --</option>
-                <option value="front">Front</option>
-                <option value="back">Back</option>
-                <option value="fullstack">Fullstack</option>
+                <option value="front" {{ old('specialite_dev') == 'front' ? 'selected' : '' }}>Front</option>
+                <option value="back" {{ old('specialite_dev') == 'back' ? 'selected' : '' }}>Back</option>
+                <option value="fullstack" {{ old('specialite_dev') == 'fullstack' ? 'selected' : '' }}>Fullstack</option>
             </select>
+            @error('specialite_dev')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+
             <textarea name="description" placeholder="Description" class="w-full border p-2 rounded mb-2">{{ old('description') }}</textarea>
+            @error('description')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+
             <label>Photo de profil :</label>
             <input type="file" name="photo" class="w-full border p-2 rounded mb-2">
+            @error('photo')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+
             <label>CV :</label>
             <input type="file" name="cv" class="w-full border p-2 rounded mb-2">
+            @error('cv')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+
             <label>Portfolio :</label>
             <input type="file" name="portfolio" class="w-full border p-2 rounded mb-2">
+            @error('portfolio')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
         </div>
 
         <!-- Formulaire ENTREPRISE -->
@@ -78,35 +93,35 @@
             <h2 class="text-lg font-medium mt-4 mb-2">Informations Entreprise</h2>
 
             <input type="text" name="nom_entreprise" placeholder="Nom de l'entreprise" class="w-full border p-2 rounded mb-2" value="{{ old('nom_entreprise') }}">
-<select name="taille_entreprise" class="w-full border p-2 rounded mb-2">
-    <option value="">-- Taille de l'entreprise --</option>
-    <option value="micro" {{ old('taille_entreprise') == 'micro' ? 'selected' : '' }}>Micro-entreprise (jusqu'à 10 salariés)</option>
-    <option value="petite" {{ old('taille_entreprise') == 'petite' ? 'selected' : '' }}>Petites entreprise (jusqu'à 50 salariés)</option>
-    <option value="moyenne" {{ old('taille_entreprise') == 'moyenne' ? 'selected' : '' }}>Moyennes entreprise (jusqu'à 250 salariés)</option>
-    <option value="grande" {{ old('taille_entreprise') == 'grande' ? 'selected' : '' }}>Grandes entreprise (plus de 250 salariés)</option>
-</select>
-@error('taille_entreprise')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+            @error('nom_entreprise')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
 
-@error('taille_entreprise')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+            <select name="taille_entreprise" class="w-full border p-2 rounded mb-2">
+                <option value="">-- Taille de l'entreprise --</option>
+                <option value="micro" {{ old('taille_entreprise') == 'micro' ? 'selected' : '' }}>Micro-entreprise (jusqu'à 10 salariés)</option>
+                <option value="petite" {{ old('taille_entreprise') == 'petite' ? 'selected' : '' }}>Petites entreprise (jusqu'à 50 salariés)</option>
+                <option value="moyenne" {{ old('taille_entreprise') == 'moyenne' ? 'selected' : '' }}>Moyennes entreprise (jusqu'à 250 salariés)</option>
+                <option value="grande" {{ old('taille_entreprise') == 'grande' ? 'selected' : '' }}>Grandes entreprise (plus de 250 salariés)</option>
+            </select>
+            @error('taille_entreprise')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
 
-@error('taille_entreprise')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
-             <select name="secteur_entreprise" class="w-full border p-2 rounded mb-2">
-        <option value="">-- Secteur d'activité --</option>
-        <option value="tech" {{ old('secteur_entreprise') == 'tech' ? 'selected' : '' }}>Technologie</option>
-        <option value="finance" {{ old('secteur_entreprise') == 'finance' ? 'selected' : '' }}>Finance</option>
-        <option value="ecommerce" {{ old('secteur_entreprise') == 'ecommerce' ? 'selected' : '' }}>E-commerce</option>
-        <option value="sante" {{ old('secteur_entreprise') == 'sante' ? 'selected' : '' }}>Santé</option>
-        <option value="education" {{ old('secteur_entreprise') == 'education' ? 'selected' : '' }}>Éducation</option>
-        <option value="autre" {{ old('secteur_entreprise') == 'autre' ? 'selected' : '' }}>Autre</option>
-    </select>
-    @error('secteur_entreprise')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
-         <select name="type_freelance" class="w-full border p-2 rounded mb-2">
-        <option value="">-- Type de freelance recherché --</option>
-        <option value="front" {{ old('type_freelance') == 'front' ? 'selected' : '' }}>Front</option>
-        <option value="back" {{ old('type_freelance') == 'back' ? 'selected' : '' }}>Back</option>
-        <option value="fullstack" {{ old('type_freelance') == 'fullstack' ? 'selected' : '' }}>Fullstack</option>
-    </select>
-    @error('type_freelance')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+            <select name="secteur_entreprise" class="w-full border p-2 rounded mb-2">
+                <option value="">-- Secteur d'activité --</option>
+                <option value="tech" {{ old('secteur_entreprise') == 'tech' ? 'selected' : '' }}>Technologie</option>
+                <option value="finance" {{ old('secteur_entreprise') == 'finance' ? 'selected' : '' }}>Finance</option>
+                <option value="ecommerce" {{ old('secteur_entreprise') == 'ecommerce' ? 'selected' : '' }}>E-commerce</option>
+                <option value="sante" {{ old('secteur_entreprise') == 'sante' ? 'selected' : '' }}>Santé</option>
+                <option value="education" {{ old('secteur_entreprise') == 'education' ? 'selected' : '' }}>Éducation</option>
+                <option value="autre" {{ old('secteur_entreprise') == 'autre' ? 'selected' : '' }}>Autre</option>
+            </select>
+            @error('secteur_entreprise')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+
+            <select name="type_freelance" class="w-full border p-2 rounded mb-2">
+                <option value="">-- Type de freelance recherché --</option>
+                <option value="front" {{ old('type_freelance') == 'front' ? 'selected' : '' }}>Front</option>
+                <option value="back" {{ old('type_freelance') == 'back' ? 'selected' : '' }}>Back</option>
+                <option value="fullstack" {{ old('type_freelance') == 'fullstack' ? 'selected' : '' }}>Fullstack</option>
+            </select>
+            @error('type_freelance')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
         </div>
 
         <!-- Bouton -->

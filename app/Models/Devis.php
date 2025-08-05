@@ -18,10 +18,13 @@ class Devis extends Model
     protected $fillable = [
         'id_devis',
         'titre_devis',
+        'description_devis', 
         'prix',
+        'delai',    
+        'etat_devis',      
         'id_mission',
         'id_dev',
-        'id_entreprise'
+        'id_entreprise',
     ];
 
     protected static function boot()
@@ -50,4 +53,5 @@ class Devis extends Model
     {
         return $this->belongsTo(Entreprise::class, 'id_entreprise', 'id_entreprise');
     }
+
 }

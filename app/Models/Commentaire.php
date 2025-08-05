@@ -41,7 +41,7 @@ class Commentaire extends Model
     }
 
     public function entreprise()
-    {
-        return $this->belongsTo(Entreprise::class, 'id_entreprise', 'id_entreprise');
-    }
+{
+    return $this->belongsTo(Entreprise::class, 'id_entreprise', 'id_entreprise');
+}
 }

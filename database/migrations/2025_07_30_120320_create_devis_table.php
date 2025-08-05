@@ -12,22 +12,25 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('devis', function (Blueprint $table) {
-            $table->uuid('id_devis')->primary();
-            $table->string('titre_devis');
-            $table->decimal('prix', 10, 2); // Prix du devis
-            
-            // Clés étrangères
-            $table->uuid('id_mission');
-            $table->uuid('id_dev');
-            $table->uuid('id_entreprise');
-            
-            // Définition des clés étrangères
-            $table->foreign('id_mission')->references('id_mission')->on('mission')->onDelete('cascade');
-            $table->foreign('id_dev')->references('id_dev')->on('dev')->onDelete('cascade');
-            $table->foreign('id_entreprise')->references('id_entreprise')->on('entreprise')->onDelete('cascade');
-            
-            $table->timestamps();
-        });
+        $table->uuid('id_devis')->primary();
+        $table->string('titre_devis');
+        $table->text('description_devis');                    // ✅ AJOUTER
+        $table->decimal('prix', 10, 2);
+        $table->string('delai');                              // ✅ AJOUTER ("3 semaines")
+        $table->enum('etat_devis', ['en_attente', 'accepte', 'refuse'])->default('en_attente'); // ✅ AJOUTER
+        
+        // Clés étrangères
+        $table->uuid('id_mission');
+        $table->uuid('id_dev');
+        $table->uuid('id_entreprise');
+        
+        // Définition des clés étrangères
+        $table->foreign('id_mission')->references('id_mission')->on('mission')->onDelete('cascade');
+        $table->foreign('id_dev')->references('id_dev')->on('dev')->onDelete('cascade');
+        $table->foreign('id_entreprise')->references('id_entreprise')->on('entreprise')->onDelete('cascade');
+        
+        $table->timestamps();
+    });
     }
 
     /**
