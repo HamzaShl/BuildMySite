@@ -2,85 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dev;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Dev;
 use App\Models\Mission;
 use App\Models\Devis;
 
 class DevController extends Controller
 {
+
+
    public function index()
 {
+    //recupere le dev connecté via un guard
     $dev = Auth::guard('dev')->user();
     
     if (!$dev) {
         return redirect()->route('login');
     }
 
-    // ✅ TON STYLE - Simple et direct
+    //Recupere les missions liées au dev connecté
     $missions = Mission::where('id_dev', $dev->id_dev)
-                     ->where('etat_mission', 'en_cours')  // Seulement les missions en cours
+                     ->where('etat_mission', 'en_cours')
                      ->get();
 
+    //envoie les données à la vue du dev
     return view('dev.index', compact('dev', 'missions'));
-}
-
-    public function create()
-    {
-        return view('dev.create');
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nom_dev' => 'required|string|max:255',
-            'prenom_dev' => 'required|string|max:255',
-            'email_dev' => 'required|email|unique:dev,email_dev',
-            'password_dev' => 'required|string|min:6',
-            'niveau_experience' => 'required|in:junior,confirme,senior',
-            'specialite_dev' => 'required|in:front,back,fullstack',
-            'description' => 'nullable|string',
-            'photo' => 'nullable|image|max:2048',
-            'cv' => 'nullable|mimes:pdf,doc,docx|max:4096',
-            'portfolio' => 'nullable|mimes:pdf,zip|max:8192',
-        ]);
 
-        $data = $request->all();
-        $data['id_dev'] = Str::uuid();
-        $data['password_dev'] = bcrypt($request->password_dev);
-
-        if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('dev_photos', 'public');
-        }
-
-        if ($request->hasFile('cv')) {
-            $data['cv'] = $request->file('cv')->store('dev_cvs', 'public');
-        }
-
-        if ($request->hasFile('portfolio')) {
-            $data['portfolio'] = $request->file('portfolio')->store('dev_portfolios', 'public');
-        }
-
-        Dev::create($data);
-
-        return redirect()->route('devs.index')->with('success', 'Développeur créé avec succès !');
-    }
-
+    //envoie la vue du profil public du dev
     public function show(string $id)
     {
         $dev = Dev::findOrFail($id);
         return view('dev.show', compact('dev'));
     }
-
+    //affiche le formulaire pour modifier les info du dev
     public function edit(string $id)
     {
         $dev = Dev::findOrFail($id);
         return view('dev.edit', compact('dev'));
     }
 
+    //met à jour les informations du dev dans l abase
     public function update(Request $request, string $id)
     {
         $dev = Dev::findOrFail($id);
@@ -133,7 +99,7 @@ class DevController extends Controller
     public function destroy(string $id)
     {
         $dev = Dev::findOrFail($id);
-
+        //supprime les fichiers photo, cv et portfolio
         if ($dev->photo) {
             Storage::disk('public')->delete($dev->photo);
         }
@@ -144,6 +110,7 @@ class DevController extends Controller
             Storage::disk('public')->delete($dev->portfolio);
         }
 
+        //supprime le dev de la base
         $dev->delete();
 
         return redirect()->route('devs.index')->with('success', 'Développeur supprimé avec succès !');
@@ -165,12 +132,10 @@ class DevController extends Controller
     if ($request->input('action') === 'accepter') {
         $mission->update(['etat_mission' => 'en_cours']);
         
-        // ✅ REDIRECTION VERS CRÉATION DE DEVIS
         return redirect()->route('devis.create', ['mission_id' => $mission->id_mission])
                         ->with('success', 'Mission acceptée ! Veuillez créer votre devis ci-dessous.');
                         
     } else {
-        // ✅ SUPPRIMER LA MISSION SI REFUSÉE
         $mission->delete();
         
         return redirect()->route('devs.index')

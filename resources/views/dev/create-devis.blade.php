@@ -16,7 +16,7 @@
     <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
         
         @if(!$devis)
-            <!-- ✅ CRÉATION DU DEVIS -->
+            <!-- CRÉATION DU DEVIS -->
             <h2 class="text-2xl font-bold mb-6 text-center">📝 Créer votre devis</h2>
             
             <form method="POST" action="{{ route('devis.store') }}">

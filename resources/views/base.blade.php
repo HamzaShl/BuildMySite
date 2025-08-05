@@ -17,30 +17,33 @@
 </head>
 <body>
 
-<nav class="bg-gray-900 text-white p-6 flex justify-between items-center">
-    <div class="text-xl font-bold">
+<!-- Navigation responsive - links restent à droite -->
+<nav class="bg-gray-900 text-white p-4 md:p-6 flex justify-between items-start">
+    <div class="text-lg md:text-xl font-bold">
         <a href="/" class="">BuildMySite</a>
     </div>
 
-    <div class="flex items-center space-x-4">
+    <div class="flex flex-col sm:flex-row items-end sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 text-right">
         @auth('entreprise')
             <!-- Si une entreprise est connectée -->
-            <a href="{{ route('entreprises.edit', Auth::guard('entreprise')->user()->id_entreprise) }}" class="text-white hover:underline">Profil</a>
+            <a href="{{ route('entreprises.edit', Auth::guard('entreprise')->user()->id_entreprise) }}" 
+               class="text-white hover:underline text-sm md:text-base">Profil</a>
             <form method="POST" action="{{ route('logout') }}" class="inline">
                 @csrf
-                <button type="submit" class="text-white hover:underline">Déconnexion</button>
+                <button type="submit" class="text-white hover:underline text-sm md:text-base">Déconnexion</button>
             </form>
         @elseauth('dev')
             <!-- Si un dev est connecté -->
-            <a href="{{ route('devs.edit', Auth::guard('dev')->user()->id_dev) }}" class="text-white hover:underline">Profil</a>
+            <a href="{{ route('devs.edit', Auth::guard('dev')->user()->id_dev) }}" 
+               class="text-white hover:underline text-sm md:text-base">Profil</a>
             <form method="POST" action="{{ route('logout') }}" class="inline">
                 @csrf
-                <button type="submit" class="text-white hover:underline">Déconnexion</button>
+                <button type="submit" class="text-white hover:underline text-sm md:text-base">Déconnexion</button>
             </form>
         @else
             <!-- Si personne n'est connecté -->
-            <a href="{{ route('login') }}" class="text-white hover:underline">Connexion</a>
-            <a href="{{ route('register') }}" class="text-white hover:underline">Inscription</a>
+            <a href="{{ route('login') }}" class="text-white hover:underline text-sm md:text-base">Connexion</a>
+            <a href="{{ route('register') }}" class="text-white hover:underline text-sm md:text-base">Inscription</a>
         @endauth
     </div>
 </nav>
